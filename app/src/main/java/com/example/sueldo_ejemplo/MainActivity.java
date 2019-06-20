@@ -68,5 +68,30 @@ public class MainActivity extends AppCompatActivity {
 
     public void limpiar(View view){
 
+        txtHoras.setText(String.valueOf(""));
+        txtDias.setText(String.valueOf(""));
+        chbxPago.setText(String.valueOf(""));
+        chbxDcto.setText(String.valueOf(""));
+        chbxDcto.setText(String.valueOf(""));
+        lbl_pago.setText(String.valueOf(""));
+        lbl_dcto.setText(String.valueOf(""));
+
+        if (chbxPago.isChecked() == true){
+            chbxPago.setChecked(false);
+        }
+
+        if (chbxDcto.isChecked() == true){
+            chbxDcto.setChecked(false);
+        }
+
+        if (rgRedondeo.getCheckedRadioButtonId() == R.id.rbRedondeo){
+            rbRedondeo.setChecked(false);
+        }
+
+        if (rgRedondeo.getCheckedRadioButtonId() == R.id.rbNoRedondeo){
+            rbNoRedondeo.setChecked(false);
+        }
+
+
     }
 }
