@@ -9,8 +9,14 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    String[] EmployeesNames ={"María Vera","Carlos Alfaro","Miguel Herrea","Patricio Flores","Claudia Olivares"};
 
     private EditText txtHoras, txtDias, txtMontoHoras, txtDscto, txtSB;
     private CheckBox chbxPago, chbxDcto;
@@ -25,6 +31,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Spinner spin = (Spinner) findViewById(R.id.simpleSpinner);
+        spin.setOnItemSelectedListener(this);
+
+
+        ArrayAdapter aa = new ArrayAdapter(this,android.R.layout.simple_spinner_item, EmployeesNames);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //Setting the ArrayAdapter data on the Spinner
+        spin.setAdapter(aa);
+
         txtHoras = (EditText)findViewById(R.id.txtMontoHoras);
         txtDias = (EditText)findViewById(R.id.txtDias);
         txtMontoHoras = (EditText)findViewById(R.id.txtMontoHoras);
@@ -38,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
         btnCalcular = (Button)findViewById(R.id.btnCalcular);
         lbl_dcto = (TextView)findViewById(R.id.lbl_dcto);
         lbl_pago = (TextView)findViewById(R.id.lbl_pago);
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position,long id) {
+        Toast.makeText(getApplicationContext(), EmployeesNames[position], Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
 
     }
 
@@ -104,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
             rbNoRedondeo.setChecked(false);
         }
 
+        Toast.makeText(getApplicationContext(), "Variables Limpias", Toast.LENGTH_LONG).show();
 
     }
 }
