@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText txtHoras, txtDias;
+    private EditText txtHoras, txtDias, txtMontoHoras, txtDscto, txtSB;
     private CheckBox chbxPago, chbxDcto;
     private RadioGroup rgRedondeo;
     private RadioButton rbRedondeo, rbNoRedondeo;
@@ -25,9 +25,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        txtHoras = (EditText)findViewById(R.id.txtHoras);
+        txtHoras = (EditText)findViewById(R.id.txtMontoHoras);
         txtDias = (EditText)findViewById(R.id.txtDias);
+        txtMontoHoras = (EditText)findViewById(R.id.txtMontoHoras);
+        txtSB = (EditText)findViewById(R.id.txtSB);
+        txtDscto = (EditText)findViewById(R.id.txtDscto);
         chbxPago = (CheckBox)findViewById(R.id.chbxPago);
         chbxDcto = (CheckBox)findViewById(R.id.chbxDcto);
         rgRedondeo = (RadioGroup)findViewById(R.id.rgRedondeo);
@@ -43,20 +45,27 @@ public class MainActivity extends AppCompatActivity {
 
         int horas = Integer.parseInt(txtHoras.getText().toString());
         int dias = Integer.parseInt(txtDias.getText().toString());
+        int montoHoras = Integer.parseInt(txtMontoHoras.getText().toString());
+        int sueldo_base = Integer.parseInt(txtSB.getText().toString());
+        double descuento = Double.parseDouble(txtDscto.getText().toString());
+        descuento = descuento/100;
+
+
         int horas_mensuales = horas*dias;
-        double pago = horas_mensuales*10;
-        double descuento = 0.00;
-        double sueldo_base = 1000.00;
+        double pago = horas_mensuales*montoHoras;
+
 
         if(chbxPago.isChecked() == true){
             lbl_pago.setText(String.valueOf(pago));
         }
-        if(chbxDcto.isChecked() == true && pago >1000){
-
-            descuento = pago - (pago*0.1);
+        if(chbxDcto.isChecked() == true && pago > sueldo_base){
+            descuento = pago*descuento;
             lbl_dcto.setText(String.valueOf(descuento));
+            pago = pago - descuento;
+            lbl_pago.setText(String.valueOf(pago));
         }
         if (rgRedondeo.getCheckedRadioButtonId() == R.id.rbRedondeo) {
+            lbl_pago.setText(String.valueOf(""));
             int pago_redondeo = (int)Math.round(pago);
             lbl_pago.setText(String.valueOf(pago_redondeo));
             int dcto_redondeo = (int)Math.round((descuento));
@@ -70,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
 
         txtHoras.setText(String.valueOf(""));
         txtDias.setText(String.valueOf(""));
+        txtMontoHoras.setText(String.valueOf(""));
+        txtSB.setText(String.valueOf(""));
+        txtDscto.setText(String.valueOf(""));
         chbxPago.setText(String.valueOf(""));
         chbxDcto.setText(String.valueOf(""));
         chbxDcto.setText(String.valueOf(""));
