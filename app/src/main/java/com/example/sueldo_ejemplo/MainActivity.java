@@ -2,6 +2,8 @@ package com.example.sueldo_ejemplo;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    String[] EmployeesNames ={"María Vera","Carlos Alfaro","Miguel Herrea","Patricio Flores","Claudia Olivares"};
+    String[] EmployeesNames ={ "SELECCIONAR USUARIO","María Vera","Carlos Alfaro","Miguel Herrea","Patricio Flores","Claudia Olivares"};
 
     private EditText txtHoras, txtDias, txtMontoHoras, txtDscto, txtSB;
     private CheckBox chbxPago, chbxDcto;
@@ -62,6 +64,77 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(getApplicationContext(), EmployeesNames[position], Toast.LENGTH_LONG).show();
     }
 
+    // Declare the onBackPressed method
+    // when the back button is pressed
+    // this method will call
+    @Override
+    public void onBackPressed()
+    {
+
+        // Create the object of
+        // AlertDialog Builder class
+        AlertDialog.Builder builder
+                = new AlertDialog
+                .Builder(MainActivity.this);
+
+        // Set the message show for the Alert time
+        builder.setMessage("Desea abandonar esta aplicación ?");
+
+        // Set Alert Title
+        builder.setTitle("Alert !");
+
+        // Set Cancelable false
+        // for when the user clicks on the outside
+        // the Dialog Box then it will remain show
+        builder.setCancelable(false);
+
+        // Set the positive button with yes name
+        // OnClickListener method is use of
+        // DialogInterface interface.
+
+        builder
+                .setPositiveButton(
+                        "SALIR",
+                        new DialogInterface
+                                .OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which)
+                            {
+
+                                // When the user click yes button
+                                // then app will close
+                                finish();
+                            }
+                        });
+
+        // Set the Negative button with No name
+        // OnClickListener method is use
+        // of DialogInterface interface.
+        builder
+                .setNegativeButton(
+                        "CANCELAR",
+                        new DialogInterface
+                                .OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which)
+                            {
+
+                                // If user click no
+                                // then dialog box is canceled.
+                                dialog.cancel();
+                            }
+                        });
+
+        // Create the Alert dialog
+        AlertDialog alertDialog = builder.create();
+
+        // Show the Alert Dialog box
+        alertDialog.show();
+    }
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub
